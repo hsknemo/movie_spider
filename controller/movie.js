@@ -10,6 +10,7 @@ const addMovie_func = async (req, res) => {
     res.send(ERROR(e.message))
   }
 }
+
 const addMovie = {
   method: 'post',
   path: '/movie/add',
