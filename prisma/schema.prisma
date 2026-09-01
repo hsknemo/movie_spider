@@ -1,0 +1,65 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+//
+// model movie {
+//   id        Int      @id @default(autoincrement())
+//   name      String   @db.VarChar(50)
+//   email     String   @unique @db.VarChar(100)
+//   age       Int?
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+// }
+
+model Live {
+  id        Int      @id @default(autoincrement())
+  title     String   @db.VarChar(100) // 播放来源
+  src       String   @db.LongText() // 播放地址
+  type      String   @default("") @db.VarChar(100) // 播放分类
+  logo      String?  @default("") @db.VarChar(500)
+  createdAt DateTime @default(now()) // 创建时间
+  updatedAt DateTime @default(now()) @updatedAt // 更新时间
+}
+
+model Movie {
+  id            Int         @id @default(autoincrement())
+  title         String      @db.VarChar(100) // 影视名称
+  originalTitle String      @db.VarChar(100) // 别名
+  createdAt     DateTime    @default(now()) // 创建时间
+  updatedAt     DateTime    @updatedAt // 更新时间
+  from          String      @db.VarChar(100) // 采集的来源
+  fromWebUrl    String // 采集的网址
+  cast          Json        @db.Json // 演员表 json 数组字符串
+  year          String      @db.VarChar(20) // 上映年份
+  rating        String      @db.VarChar(20) // 评分
+  summary       String      @db.LongText // 介绍
+  poster        String      @db.VarChar(200) // 封面网址
+  isEnd         String      @db.VarChar(10) // 是否完结 1 完结 0 未完结
+  genre         Json        @db.Json // 分类 json 数组字符串
+  category      String      @db.VarChar(20) // 归属 tv movie
+  type          String      @db.VarChar(20) // 大分类  电影 电视剧 下饭 动漫
+  movieItem     movieItem[]
+
+  @@map("movie")
+}
+
+model movieItem {
+  id       Int    @id @default(autoincrement())
+  category String @db.VarChar(20) // 归属 tv movie
+  title    String @db.VarChar(200) // 剧集名称
+  source   String @db.VarChar(200) // 观看地址
+  movie    Movie  @relation(fields: [movieId], references: [id], onDelete: Cascade)
+  movieId  Int
+
+  @@map("movieItem")
+}

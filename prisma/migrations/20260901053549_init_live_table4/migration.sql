@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `Live` MODIFY `logo` VARCHAR(500) NULL DEFAULT '';
