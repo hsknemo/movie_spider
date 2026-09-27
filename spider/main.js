@@ -170,7 +170,6 @@ class MovieSpider {
     data.category = 'tv'
     data.isEnd = 0
     data.type = '综艺'
-    console.log(data)
     // let d = await this.addData(data)
     // let result = d.data.data
     // let res = await this.addItems(data.episodeList, result.id)
@@ -236,11 +235,16 @@ class MovieSpider {
       id = result.id
     }
 
+
     data.episodeList.forEach(item => {
       item.category = data.category
       item.movieId = id
       delete item.id
     })
+
+    console.log('加载爬取html 开始 #################################')
+    console.log('解析剧集', ` \r\n 标题${data.title}  \r\n 长度：${data.episodeList.length}, \r\n 上映时间：${data.year}`)
+    console.log('加载爬取html 结束 ################################# ')
     try {
       let res = await this.addItems(data.episodeList, id)
       return res

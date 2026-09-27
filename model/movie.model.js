@@ -12,22 +12,24 @@ module.exports = class MovieModel {
     let where = {}
 
     if (form.id) {
-      where = Object.assign({}, {
+      where = Object.assign({}, where,{
         id: form.id
       })
     }
     if (form.category) {
-      where = Object.assign({}, {
+      where = Object.assign({}, where,{
         category: form.category
       })
     }
     if (form.title) {
-      where = Object.assign({}, {
-        title: form.title
+      where = Object.assign({}, where, {
+        title: {
+          contains: form.title
+        }
       })
     }
     if (form.type) {
-      where = Object.assign({}, {
+      where = Object.assign({}, where,{
         type: form.type
       })
     }
@@ -37,6 +39,7 @@ module.exports = class MovieModel {
 
 
     let needSelectItem = form.needSelectItem
+    console.log(where)
 
     let query = {
       select: {
